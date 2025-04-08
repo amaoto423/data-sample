@@ -2,6 +2,7 @@ import os
 import pandas as pd
 from azure.storage.blob import BlobClient
 from sqlalchemy import create_engine
+from io import StringIO
 
 # 環境変数から設定を取得
 ST_URL = os.environ["ST_URL"]      # 例: https://pbistoragexxxx.blob.core.windows.net
@@ -12,7 +13,7 @@ BLOB_PATH = os.environ["BLOB_PATH"]  # アップロード時に指定したパ�
 # 1. CSV 取得
 blob = BlobClient(account_url=ST_URL, container_name="demo", blob_name=BLOB_PATH, credential=SAS_TOKEN)
 csv_bytes = blob.download_blob().readall()
-df = pd.read_csv(pd.compat.StringIO(csv_bytes.decode()))
+df = pd.read_csv(StringIO(csv_bytes.decode())) 
 
 # 2. 税抜き価格カラムを追加（消費税10%として）
 df["amount_excl_tax"] = (df["amount"] / 1.10).round(2)
