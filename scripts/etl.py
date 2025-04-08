@@ -3,6 +3,7 @@ import pandas as pd
 from azure.storage.blob import BlobClient
 from sqlalchemy import create_engine
 from io import StringIO
+from sqlalchemy import text
 
 # 環境変数から設定を取得
 ST_URL = os.environ["ST_URL"]      # 例: https://pbistoragexxxx.blob.core.windows.net
