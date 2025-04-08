@@ -1,0 +1,27 @@
+name: ETL CSV to Azure SQL
+
+on:
+  workflow_dispatch: # 手動トリガー可能
+  schedule:
+    - cron: "0 3 * * 1" # 毎週月曜 3:00 UTC（例：日本時間12:00になるように調整）
+
+jobs:
+  etl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run ETL script
+        env:
+          ST_URL: ${{ secrets.ST_URL }}
+          SAS_TOKEN: ${{ secrets.SAS_TOKEN }}
+          SQL_URI: ${{ secrets.SQL_URI }}
+        run: python scripts/etl.py
