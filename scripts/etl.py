@@ -21,7 +21,7 @@ df["amount_excl_tax"] = (df["amount"] / 1.10).round(2)
 # 3. Azure SQL Database へ INSERT（テーブル存在チェックも含む）
 engine = create_engine(SQL_URI, fast_executemany=True)
 with engine.begin() as conn:
-    conn.execute("""
+    conn.execute(text("""
         IF OBJECT_ID('dbo.Payments','U') IS NULL
         CREATE TABLE dbo.Payments(
             payment_id INT PRIMARY KEY,
@@ -29,7 +29,7 @@ with engine.begin() as conn:
             amount DECIMAL(10,2),
             amount_excl_tax DECIMAL(10,2)
         )
-    """)
+    """))
     # ここでは新データを追加するため、すでに存在するレコードとの重複はエラーになる可能性に留意
     df.to_sql("Payments", conn, if_exists="append", index=False)
 print("ETL 完了")
