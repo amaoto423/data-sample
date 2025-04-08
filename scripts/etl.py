@@ -10,7 +10,7 @@ SQL_URI = os.environ["SQL_URI"]        # 例: mssql+pyodbc://sqladmin:P%40ssw0rd
 BLOB_PATH = "payments/payments_2025-04-10.csv"  # アップロード時に指定したパス
 
 # 1. CSV 取得
-blob = BlobClient(account_url=ST_URL, container_name="raw", blob_name=BLOB_PATH, credential=SAS_TOKEN)
+blob = BlobClient(account_url=ST_URL, container_name="demo", blob_name=BLOB_PATH, credential=SAS_TOKEN)
 csv_bytes = blob.download_blob().readall()
 df = pd.read_csv(pd.compat.StringIO(csv_bytes.decode()))
 
