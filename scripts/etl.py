@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 ST_URL = os.environ["ST_URL"]      # 例: https://pbistoragexxxx.blob.core.windows.net
 SAS_TOKEN = os.environ["SAS_TOKEN"]    # SAS トークン（?sv=...）
 SQL_URI = os.environ["SQL_URI"]        # 例: mssql+pyodbc://sqladmin:P%40ssw0rd!123@pbisqlsrvxxxx.database.windows.net/pbi_demo?driver=ODBC+Driver+18+for+SQL+Server
-BLOB_PATH = "payments/payments_2025-04-10.csv"  # アップロード時に指定したパス
+BLOB_PATH = os.environ["BLOB_PATH"]  # アップロード時に指定したパス
 
 # 1. CSV 取得
 blob = BlobClient(account_url=ST_URL, container_name="demo", blob_name=BLOB_PATH, credential=SAS_TOKEN)
