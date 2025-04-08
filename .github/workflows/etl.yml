@@ -24,4 +24,5 @@ jobs:
           ST_URL: ${{ secrets.ST_URL }}
           SAS_TOKEN: ${{ secrets.SAS_TOKEN }}
           SQL_URI: ${{ secrets.SQL_URI }}
+          BLOB_PATH: ${{ secrets.BLOB_PATH }}
         run: python scripts/etl.py
